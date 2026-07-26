@@ -1,8 +1,10 @@
-# 🦊 ROK Tauri YouTube Downloader ⚡🤖
+# ROK Tauri YouTube Downloader ⚡🤖 (Linux Edition)
 
-Cliente de escritorio ultra elegante y de alto rendimiento para descargar videos y audio de YouTube. Desarrollado con la velocidad de **Rust (Tauri v2)**, un **sidecar de Python** personalizado y una interfaz web moderna y responsiva.
+Adaptación para **Linux** del cliente de escritorio ultra elegante y de alto rendimiento para descargar videos y audio de YouTube. Esta versión ha sido modificada y adaptada para ejecutarse en entornos Linux (enfocado principalmente en distribuciones basadas en Debian/Ubuntu como **Linux Mint**).
 
-Este proyecto utiliza el patrón seguro **Sidecar** de Tauri para delegar las tareas pesadas de extracción y procesamiento de video a un backend local de Python compilado, manteniendo la aplicación principal sumamente ligera y rápida.
+> **Estado del proyecto:** Actualmente no se encuentra precompilado en este repositorio. La compilación de la aplicación lista para ejecutar (`.deb` / `.AppImage`) se realizará utilizando un entorno de **máquina virtual (VM) o Docker**, y el ejecutable final empaquetado se compartirá posteriormente a través de **Google Drive** u otra plataforma externa.
+
+⚠️ **Aviso de inicio:** En ocasiones, al abrir la aplicación, la interfaz puede indicar que está cargada antes de que los procesos internos terminen de inicializarse por completo. Si notas que tu primer intento no responde, simplemente espera unos segundos y realiza otra descarga.
 
 ---
 
