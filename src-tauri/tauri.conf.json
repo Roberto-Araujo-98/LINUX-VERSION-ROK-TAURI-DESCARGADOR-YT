@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "DESCARGADOR-YT-ROK",
+  "version": "0.1.0",
+  "identifier": "com.rok.ytdownloader",
+  "build": {
+    "frontendDist": "../ui"
+  },
+ "app": {
+    "windows": [
+      {
+        "title": "ROK - Descargador YT",
+        "width": 800,
+        "height": 600,
+        "minWidth": 400,   
+      "minHeight": 500,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "withGlobalTauri": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["deb","appimage"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "licenseFile": "./licencia.rtf",
+    "windows": {
+      "wix": {
+        "language": "es-ES"
+      }
+    },
+    "android": {
+      "debugApplicationIdSuffix": ".debug"
+    },
+    "externalBin": [
+      "binaries/descargador-yt"
+    ],
+    "resources": [
+      "resources/ffmpeg.exe",
+      "resources/ffprobe.exe"
+    ]
+  }}
