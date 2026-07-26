@@ -1,0 +1,334 @@
+/* --- CONFIGURACIÓN ESTILO CYBERPUNK LIMPIO --- */
+:root {
+  --bg-color: #050507;        /* Negro absoluto de fondo */
+  --card-bg: #0b0c10;         /* Negro grisáceo tecnológico */
+  --text-color: #ffffff;      /* Blanco para textos principales */
+  --text-secondary: #00f0ff;  /* Azul Neón / Cian */
+  --primary: #16a34a;         /* Verde base */
+  --neon-green: #00ff66;     /* Verde Neón */
+  --neon-green-glow: rgba(0, 255, 102, 0.25); /* Brillo suavizado */
+  --cyber-blue: #00f0ff;     /* Azul Neón */
+  --cyber-blue-glow: rgba(0, 240, 255, 0.2);  /* Brillo suavizado */
+  --danger: #dc2626;          /* Rojo base */
+  --neon-red: #ff0055;       /* Rojo Neón */
+  --neon-red-glow: rgba(255, 0, 85, 0.25);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Líneas de escaneo sutiles CRT */
+  background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 4px, 6px 100%;
+}
+
+.container {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  border: 2px solid var(--cyber-blue);
+  box-shadow: 0 8px 30px var(--cyber-blue-glow), inset 0 0 15px rgba(0, 240, 255, 0.05);
+  width: 480px;
+  text-align: center;
+  position: relative;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h2 span {
+  color: var(--neon-green);
+  text-shadow: 0 0 6px var(--neon-green-glow);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--cyber-blue);
+  border-radius: 6px;
+  background-color: #020203;
+  color: var(--neon-green);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: all 0.2s;
+  text-shadow: 0 0 3px var(--neon-green-glow);
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green-glow);
+}
+
+/* --- ESTILO SELECTOR DE CALIDAD CYBERPUNK --- */
+.calidad-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.calidad-label {
+  color: var(--text-secondary);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  margin-right: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+select {
+  background-color: #020203;
+  color: var(--neon-green);
+  border: 1px solid var(--cyber-blue);
+  padding: 8px 12px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 240, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+select:focus {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 8px var(--neon-green-glow);
+}
+
+.btn-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 12px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Botón Verde (Audio) */
+.btn-audio { 
+  background-color: var(--primary); 
+  color: white; 
+}
+.btn-audio:hover { 
+  background-color: var(--neon-green); 
+  color: #000000;
+  box-shadow: 0 0 8px var(--neon-green);
+}
+
+/* Botón Azul (Video) */
+.btn-video { 
+  background-color: #0099ff; 
+  color: white; 
+}
+.btn-video:hover { 
+  background-color: var(--cyber-blue); 
+  color: #000000;
+  box-shadow: 0 0 8px var(--cyber-blue);
+}
+
+.btn-secondary { 
+  background-color: #3f3f46; 
+  color: white; 
+  margin-top: 15px;
+}
+.btn-secondary:hover { 
+  background-color: #52525b; 
+  box-shadow: 0 0 6px rgba(255,255,255,0.15);
+}
+
+/* Botón Rojo (Salir) */
+.btn-danger { 
+  background-color: var(--danger); 
+  color: white; 
+  width: 100%; 
+  justify-content: center; 
+}
+.btn-danger:hover { 
+  background-color: var(--neon-red); 
+  box-shadow: 0 0 8px var(--neon-red);
+}
+
+/* Clases para alternar paneles */
+.oculto {
+  display: none !important;
+}
+
+#panel-progreso {
+  padding: 15px 0;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 240, 255, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: var(--neon-green);
+  border-right-color: var(--cyber-blue);
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 0 8px var(--cyber-blue-glow);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- CONTENEDOR DE TERMINAL ESTILIZADO --- */
+.terminal-box {
+  background-color: #020204;
+  border: 1px solid #22252a;
+  border-radius: 6px;
+  padding: 15px;
+  max-height: 180px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.estado-msg {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #a3e635;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.terminal-footer {
+  font-family: monospace;
+  font-size: 10px;
+  color: #454e59;
+  margin-top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- CONTENEDOR DE LA BARRA DE CARGA --- */
+.progress-container-cyber {
+  width: 100%;
+  margin: 25px 0;
+  font-family: 'Courier New', monospace;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* Etiquetas superiores */
+.progress-bar-label {
+  display: flex;
+  justify-content: space-between;
+  color: #00f0ff;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  letter-spacing: 1px;
+}
+
+/* El canal exterior de la barra */
+.progress-bar-track {
+  width: 100%;
+  height: 24px;
+  background-color: #0a0d11;
+  border: 1px solid #00f0ff;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* El relleno interno con gradiente neón */
+.progress-bar-fill {
+  height: 100%;
+  width: 0%; /* Controlado por JS */
+  background: linear-gradient(90deg, #00f0ff 0%, #00ff66 100%);
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.5);
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s;
+  position: relative;
+}
+
+/* Animación de líneas diagonales (Efecto comercial activo) */
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, 0.15) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, 0.15) 50%, 
+    rgba(255, 255, 255, 0.15) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  background-size: 30px 30px;
+  animation: move-stripes 1.2s linear infinite;
+}
+
+@keyframes move-stripes {
+  from { background-position: 30px 0; }
+  to { background-position: 0 0; }
+}
+
+/* Texto de detalles debajo de la barra */
+.progress-details-text {
+  color: #8892b0;
+  font-size: 10px;
+  margin-top: 10px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  min-height: 30px; /* Evita que el layout salte */
+}
+
+/* Variación de error para la barra */
+.progress-bar-track.error-state {
+  border-color: #ff0055;
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
+}
+.progress-bar-fill.error-state {
+  background: #ff0055;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+}

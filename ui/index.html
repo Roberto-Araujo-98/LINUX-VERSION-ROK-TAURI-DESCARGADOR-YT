@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROK YT Downloader // NET-RUNNER</title>
+  <link rel="stylesheet" href="rok.css">
+</head>
+<body>
+
+ <div class="container">
+    
+    <!-- 1. PANEL PRINCIPAL / MENÚ -->
+    <div id="panel-menu">
+      <h2>ROK // <span>YT_EXTRACTOR</span></h2>
+      <div class="subtitle">>> STATUS: READY_TO_INJECT_URL</div>
+      
+      <div class="input-group">
+        <input type="text" id="input-url" placeholder="[INGRESE URL DE YOUTUBE AQUÍ]" autocomplete="off">
+      </div>
+
+      <!-- A. GRUPO DE BOTONES INICIALES -->
+      <div id="grupo-botones-iniciales" class="btn-group">
+        <button id="btn-audio" class="btn-audio">🎵 AUDIO.mp3</button>
+        <button id="btn-video" class="btn-video">🎥 VIDEO.mp4</button>
+      </div>
+
+      <!-- B. SECCIÓN DE SELECCIÓN DE CALIDAD (Oculta por defecto) -->
+      <div id="contenedor-calidad" class="oculto" style="margin-top: 20px; margin-bottom: 15px; width: 100%;">
+        
+        <!-- Contenedor alineado verticalmente -->
+        <div class="calidad-container" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; gap: 8px; margin-bottom: 20px;">
+          <span class="calidad-label" style="font-family: 'Courier New', monospace; color: var(--neon-green); font-size: 11px; letter-spacing: 1px;">
+            >> SELECT_VIDEO_QUALITY:
+          </span>
+          <select id="select-calidad" style="width: 100%; box-sizing: border-box; padding: 10px; background-color: #0c0f12; border: 1px solid #454e59; color: #fff; font-family: 'Courier New', monospace; border-radius: 4px; cursor: pointer;">
+            <option value="1">1080p / 2K / 4K (Máxima)</option>
+            <option value="2" selected>720p HD (Estándar)</option>
+            <option value="3">480p (Baja / Ligera)</option>
+          </select>
+        </div>
+        
+        <!-- ⚠️ NOTA DE SEGURIDAD / ADVERTENCIA CYBERPUNK -->
+        <div style="background-color: rgba(255, 0, 85, 0.05); border: 1px dashed var(--neon-red); padding: 10px; border-radius: 4px; margin-bottom: 20px; text-align: left;">
+          <p style="font-family: 'Courier New', monospace; color: var(--neon-red); font-size: 10px; margin: 0; line-height: 1.4; text-transform: uppercase;">
+            [!] SYSTEM_NOTICE: SI YA DESCARGASTE ESTE VIDEO ANTES, ELIMINA O MUEVE EL ARCHIVO ANTERIOR DE TU CARPETA PARA EVITAR CONFLICTOS DE SOBREESCRITURA.
+          </p>
+        </div>
+
+        <!-- Botones en paralelo perfectamente alineados -->
+        <div class="btn-group" style="display: flex; gap: 12px; width: 100%; justify-content: space-between;">
+          <button id="btn-confirmar-video" class="btn-video" style="flex: 1; padding: 12px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            🚀 CONFIRM_EXTRACTION
+          </button>
+          <button id="btn-cancelar-calidad" class="btn-secondary" style="flex: 1; padding: 12px; font-size: 12px;">
+            ↩ CANCEL
+          </button>
+        </div>
+      </div>
+      
+      <hr style="border: 0; border-top: 1px dashed #454e59; margin: 20px 0;">
+      
+      <button id="btn-salir" class="btn-danger">❌ DISCONNECT_APP</button>
+    </div>
+
+    <!-- 2. PANEL DE PROGRESO Y RESULTADOS -->
+    <div id="panel-progreso" class="oculto">
+      
+      <!-- INTERFAZ DE CARGA COMERCIAL -->
+      <div class="progress-container-cyber">
+        <div class="progress-bar-label">
+          <span id="progreso-titulo">>> STATUS: INJECTING_STREAM</span>
+          <span id="progreso-porcentaje">0%</span>
+        </div>
+        
+        <div id="barra-track" class="progress-bar-track">
+          <div id="barra-fill" class="progress-bar-fill"></div>
+        </div>
+        
+        <div id="progreso-detalles" class="progress-details-text">
+          ESTABLISHING SECURE PROTOCOLS WITH YOUTUBE MATRIX...
+        </div>
+      </div>
+      
+      <button id="btn-regresar" class="btn-secondary oculto" style="width: 100%; margin-top: 10px;">🔄 RETURN_TO_MENU</button>
+    </div>
+
+    <!-- Footer de terminal y cierre de .container -->
+    <div class="terminal-footer">ROK_NET_SYSTEMS // PORT_8080 // SECURITY: SECURE</div>
+  </div>
+
+  <!-- --- LÓGICA DE CONTROL DE FLUJO --- -->
+  <script type="module" src="rok.js"></script>
+</body>
+</html>
