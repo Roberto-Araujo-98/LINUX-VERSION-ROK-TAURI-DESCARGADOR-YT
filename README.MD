@@ -160,4 +160,4 @@ Si notas que un video da error o que la descarga se interrumpe de la nada:
 
 > 💡 **Próximamente:** Estamos planificando la integración del actualizador automático nativo (*Tauri Updater*). En futuras versiones, la app se conectará a este repositorio al iniciar y te avisará si hay una actualización lista para instalar con un solo clic.
 
-*Creado por Roberto Ricardo Araujo Ari - ROK.*
+*Creado por Roberto Ricardo Araujo Ari - ROK.* 1
