@@ -1,6 +1,7 @@
 import os
 import sys
 import io
+import shutil
 
 # Forzar UTF-8 en los canales estándar de Windows para evitar errores con emojis en Tauri
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -24,47 +25,62 @@ def mostrar_menu():
     print("-" * 50)
 
 def elegir_calidad_video(opc_manual=None):
-    # Si viene desde la interfaz gráfica de Tauri, ya tenemos la opción predefinida en opc_manual
-    opc = opc_manual if opc_manual else input("Selecciona una calidad (1-3): ").strip()
+    # Solicitamos la pista de audio AAC nativa (m4a) de YouTube para garantizar compatibilidad
+    fmt_1080p = 'bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best'
+    fmt_720p  = 'bestvideo[height<=720]+bestaudio[ext=m4a]/bestvideo[height<=720]+bestaudio/best'
+    fmt_480p  = 'bestvideo[height<=480]+bestaudio[ext=m4a]/bestvideo[height<=480]+bestaudio/best'
+
+    # Si viene desde la interfaz gráfica de Tauri
+    if opc_manual:
+        if opc_manual == '2':
+            return fmt_720p
+        elif opc_manual == '3':
+            return fmt_480p
+        else:
+            return fmt_1080p
     
-    if opc == '2':
-        return 'bestvideo[height<=720]+bestaudio/best'
-    elif opc == '3':
-        return 'bestvideo[height<=480]+bestaudio/best'
-    else:
-        return 'bestvideo+bestaudio/best'
+    # Si se ejecuta manualmente en terminal (bucle de reintento)
+    while True:
+        opc = input("Selecciona una calidad (1-3): ").strip()
+        if opc == '1':
+            return fmt_1080p
+        elif opc == '2':
+            return fmt_720p
+        elif opc == '3':
+            return fmt_480p
+        else:
+            print("❌ Opción inválida. Selecciona 1, 2 o 3.")
 
 def descargar_media(url, opcion, calidad_predefinida=None):
-    # 🎯 LOCALIZADOR ABSOLUTO DE FFMPEG PARA ENTORNO TAURI
-    ffmpeg_bin = None
+    # 🎯 LOCALIZADOR ABSOLUTO DE FFMPEG PARA TAURI Y TERMINAL
+    ffmpeg_bin = shutil.which('ffmpeg')  # 1. Busca en las variables de entorno (PATH) de Windows
 
-    if getattr(sys, 'frozen', False):
-        # 🤖 MODO TAURI COMPILADO / PRODUCCIÓN:
-        directorio_real_exe = os.path.dirname(os.path.abspath(sys.executable))
-        
-        opciones_ruta = [
-            os.path.join(directorio_real_exe, 'ffmpeg.exe'),      # Al lado de tu binario en src-tauri/binaries
-            os.path.join(directorio_real_exe, '..', 'resources', 'ffmpeg.exe'), # Estructura instalada de producción
-            os.path.join(directorio_real_exe, 'resources', 'ffmpeg.exe')
-        ]
+    if not ffmpeg_bin:
+        if getattr(sys, 'frozen', False):
+            # 🤖 MODO TAURI COMPILADO / PRODUCCIÓN:
+            directorio_real_exe = os.path.dirname(os.path.abspath(sys.executable))
+            opciones_ruta = [
+                os.path.join(directorio_real_exe, 'ffmpeg.exe'),
+                os.path.join(directorio_real_exe, '..', 'resources', 'ffmpeg.exe'),
+                os.path.join(directorio_real_exe, 'resources', 'ffmpeg.exe')
+            ]
+        else:
+            # 💻 MODO MANUAL / ENTORNO DESARROLLO DE TAURI:
+            directorio_script = os.path.dirname(os.path.abspath(__file__))
+            directorio_actual = os.getcwd()
+            opciones_ruta = [
+                os.path.join(directorio_actual, 'ffmpeg.exe'),
+                os.path.join(directorio_script, 'ffmpeg.exe'),
+                os.path.join(directorio_script, 'src-tauri', 'binaries', 'ffmpeg.exe'),
+                os.path.join(os.path.dirname(directorio_script), 'src-tauri', 'binaries', 'ffmpeg.exe')
+            ]
+
         for ruta in opciones_ruta:
             if os.path.exists(ruta):
                 ffmpeg_bin = os.path.abspath(ruta)
                 break
-    else:
-        # 💻 MODO MANUAL / ENTORNO DESARROLLO DE TAURI:
-        directorio_script = os.path.dirname(os.path.abspath(__file__))
-        opciones_ruta = [
-            os.path.join(directorio_script, 'ffmpeg.exe'),
-            os.path.join(directorio_script, 'src-tauri', 'binaries', 'ffmpeg.exe'),
-            os.path.join(os.path.dirname(directorio_script), 'src-tauri', 'binaries', 'ffmpeg.exe')
-        ]
-        for ruta in opciones_ruta:
-            if os.path.exists(ruta):
-                ffmpeg_bin = os.path.abspath(ruta)
-                break
 
-    # Si por alguna razón no lo mapeó, dejamos 'ffmpeg' para que use el global de Windows si existe
+    # Si no lo encuentra en ninguna ruta, dejamos el comando global por defecto
     if not ffmpeg_bin:
         ffmpeg_bin = 'ffmpeg'
 
@@ -76,7 +92,7 @@ def descargar_media(url, opcion, calidad_predefinida=None):
         'outtmpl': os.path.join(carpeta_descargas, '%(title)s.%(ext)s'),
         'quiet': False,
         'no_warnings': True,
-        'ffmpeg_location': ffmpeg_bin,  # Mapeo obligatorio del binario para conversiones y uniones
+        'ffmpeg_location': ffmpeg_bin,
         'noplaylist': True,
         'playlist_items': '1',
         'extract_flat': 'discard_in_playlist',
@@ -94,7 +110,6 @@ def descargar_media(url, opcion, calidad_predefinida=None):
             }],
         })
     elif opcion in ['2', 'video']:
-        # Mapeamos dinámicamente la calidad requerida
         formato_seleccionado = elegir_calidad_video(calidad_predefinida)
             
         print(f"📺 Configurando descarga de video con la resolución elegida usando: {ffmpeg_bin}")
@@ -115,12 +130,11 @@ def descargar_media(url, opcion, calidad_predefinida=None):
         print(f"\n❌ Ocurrió un error crítico durante la descarga: {e}")
 
 if __name__ == "__main__":
-    # 🤖 INTERFAZ DE TAURI: Si Rust le inyecta argumentos por consola (URL, formato y opcionalmente calidad)
+    # 🤖 INTERFAZ DE TAURI: Si Rust inyecta argumentos por consola (URL, formato y opcionalmente calidad)
     if len(sys.argv) >= 3:
         url_argumento = sys.argv[1].strip()
         formato_argumento = sys.argv[2].strip()
         
-        # Leemos el 4° argumento si existe (la calidad '1', '2' o '3')
         calidad_argumento = sys.argv[3].strip() if len(sys.argv) >= 4 else None
         
         descargar_media(url_argumento, formato_argumento, calidad_argumento)
@@ -141,7 +155,6 @@ if __name__ == "__main__":
                     print("❌ El enlace no puede estar vacío. Intenta de nuevo.\n")
                     continue
                 
-                # En modo manual el tercer parámetro se queda vacío para que pregunte por consola
                 descargar_media(url, opcion)
             else:
                 print("❌ Opción no reconocida. Por favor, digita 1, 2 o 3.\n")
